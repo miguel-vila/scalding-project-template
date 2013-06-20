@@ -4,8 +4,8 @@ import com.twitter.scalding._
 
 class BigramJob(args : Args) extends Job(args) {
   TextLine( args("input") )
-    .flatMap('line -> 'word) { line : String => pairs(tokenize(line)).map(bigram => bigram._1+" "+bigram._2) }
-    .groupBy('b1) { _.size }
+    .flatMap('line -> 'bigram) { line : String => pairs(tokenize(line)).map(bigram => bigram._1+" "+bigram._2) }
+    .groupBy('bigram) { _.size }
     .write( Tsv( args("output") ) )
 
   def tokenize(text : String) : List[String] = {
